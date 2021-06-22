@@ -1,16 +1,19 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
+import { Router } from "./router";
+import { AuthContextProvider } from "./contexts/AuthContext";
+
 import { GlobalStyles } from "./styles/global";
 import { defaultTheme } from "./styles/theme";
-
-import { Home } from "./pages/Home/Home";
 
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyles />
-      <Home />
+      <AuthContextProvider>
+        <Router />
+      </AuthContextProvider>
     </ThemeProvider>
   );
 }
