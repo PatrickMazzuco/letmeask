@@ -9,14 +9,14 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    color: ${(props) => props.theme.textMain};
-    background: ${(props) => props.theme.background};
+    color: ${(props) => props.theme.palette.textMain};
+    background: ${(props) => props.theme.palette.background};
   }
   
   body,
   input,
   button,
   textarea {
-    font: 400 16px "Roboto", sans-serif;
+    font: 400 1rem "Roboto", sans-serif;
   }
 `;

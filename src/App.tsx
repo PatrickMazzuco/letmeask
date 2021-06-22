@@ -10,6 +10,7 @@ function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyles />
+      <Home />
     </ThemeProvider>
   );
 }
