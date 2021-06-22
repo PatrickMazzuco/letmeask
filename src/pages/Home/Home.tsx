@@ -5,12 +5,19 @@ import illustrationImg from "../../assets/images/illustration.svg";
 import logoImg from "../../assets/images/logo.svg";
 import googleIconImg from "../../assets/images/google-icon.svg";
 
+import { useAuth } from "../../hooks/useAuth";
+
 import * as S from "./styles";
 
 export const Home = () => {
   const history = useHistory();
+  const { loginWithGoogle, user } = useAuth();
 
-  const navigateToNewRoom = () => {
+  const handleGoogleLogin = async () => {
+    if (!user) {
+      await loginWithGoogle();
+    }
+
     history.push("/rooms/new");
   };
 
@@ -29,7 +36,7 @@ export const Home = () => {
       <S.Main>
         <S.Content>
           <S.LogoImg src={logoImg} alt="Letmeask" />
-          <S.CreateRoomButton onClick={navigateToNewRoom}>
+          <S.CreateRoomButton onClick={handleGoogleLogin}>
             <img src={googleIconImg} alt="Logo do Google" />
             Crie sua sala com o Google
           </S.CreateRoomButton>

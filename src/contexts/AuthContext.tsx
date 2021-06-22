@@ -5,7 +5,7 @@ import { auth } from "../services/firebase";
 interface AuthContextData {
   loginWithGoogle: () => Promise<void>;
   logout: () => Promise<boolean | undefined>;
-  user?: User;
+  user: User | undefined;
 }
 
 export const AuthContext = createContext({} as AuthContextData);
