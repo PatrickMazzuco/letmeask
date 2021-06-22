@@ -2,6 +2,7 @@ export const defaultTheme = {
   palette: {
     background: "#f8f8f8",
     textMain: "#29292e",
+    textMainLight: "#737380",
     textLight: "#fff",
     textLighter: "#f8f8f8",
     border: "#a8a8b3",
