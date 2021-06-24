@@ -1,6 +1,11 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { ButtonVariants } from "./Button";
 
-export const Button = styled.button`
+interface ButtonProps {
+  variant?: ButtonVariants;
+}
+
+export const Button = styled.button<ButtonProps>`
   height: 3.125rem;
 
   display: flex;
@@ -19,6 +24,15 @@ export const Button = styled.button`
   cursor: pointer;
 
   transition: filter 0.2s;
+
+  ${({ variant }) =>
+    variant === "outlined"
+      ? css`
+          background: ${({ theme }) => theme.palette.background};
+          color: ${({ theme }) => theme.palette.main};
+          border: 1px solid ${({ theme }) => theme.palette.main};
+        `
+      : {}}
 
   img {
     margin-right: 0.5rem;

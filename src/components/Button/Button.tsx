@@ -2,9 +2,12 @@ import React from "react";
 
 import * as S from "./styles";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+export type ButtonVariants = "default" | "outlined";
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: ButtonVariants;
+}
 
 export const Button = (props: ButtonProps) => {
-  const { children, ...remainingProps } = props;
-  return <S.Button {...remainingProps}>{children}</S.Button>;
+  const { variant = "default", ...remainingProps } = props;
+  return <S.Button variant={variant} {...remainingProps} />;
 };
