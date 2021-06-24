@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 
 import { auth } from "../services/firebase";
+import { User } from "../models/User";
 
 interface AuthContextData {
   loginWithGoogle: () => Promise<void>;
@@ -12,12 +13,6 @@ export const AuthContext = createContext({} as AuthContextData);
 
 interface AuthContextProviderProps {
   children: React.ReactNode;
-}
-
-interface User {
-  id: string;
-  name: string;
-  photoURL: string;
 }
 
 export const AuthContextProvider = ({
