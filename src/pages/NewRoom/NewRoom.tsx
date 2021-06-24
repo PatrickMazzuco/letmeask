@@ -1,12 +1,28 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 import illustrationImg from "../../assets/images/illustration.svg";
 import logoImg from "../../assets/images/logo.svg";
+import { useAuth } from "../../hooks/useAuth";
+import RoomService from "../../services/data/room";
 
 import * as S from "./styles";
 
 export const NewRoom = () => {
+  const [roomName, setRoomName] = useState("");
+  const history = useHistory();
+  const { user } = useAuth();
+
+  const handleCreateRoom = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (roomName.trim() === "") return;
+
+    const roomId = await RoomService.create(roomName, user!.id);
+
+    history.push(`/rooms/${roomId}`);
+  };
+
   return (
     <S.Container>
       <S.Aside>
@@ -23,8 +39,13 @@ export const NewRoom = () => {
         <S.Content>
           <S.LogoImg src={logoImg} alt="Letmeask" />
           <S.FormTitle>Criar uma nova sala</S.FormTitle>
-          <S.Form>
-            <S.Input type="text" placeholder="Nome da sala" />
+          <S.Form onSubmit={handleCreateRoom}>
+            <S.Input
+              type="text"
+              placeholder="Nome da sala"
+              value={roomName}
+              onChange={(e) => setRoomName(e.target.value)}
+            />
             <S.CreateRoomButton type="submit">Criar sala</S.CreateRoomButton>
           </S.Form>
           <S.BottomText>
