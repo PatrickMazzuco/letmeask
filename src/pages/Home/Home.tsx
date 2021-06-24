@@ -6,9 +6,9 @@ import logoImg from "../../assets/images/logo.svg";
 import googleIconImg from "../../assets/images/google-icon.svg";
 
 import { useAuth } from "../../hooks/useAuth";
+import RoomService from "../../services/data/room";
 
 import * as S from "./styles";
-import RoomService from "../../services/data/room";
 
 export const Home = () => {
   const [roomCode, setroomCode] = useState("");
