@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import logoImg from "../../assets/images/logo.svg";
@@ -8,6 +8,7 @@ import { RoomCode } from "../../components/RoomCode/RoomCode";
 import { useAuth } from "../../hooks/useAuth";
 import { Question as QuestionModel } from "../../models/Question";
 import QuestionService from "../../services/data/question";
+import RoomService from "../../services/data/room";
 
 import * as S from "./styles";
 
@@ -17,8 +18,23 @@ interface RoomCodeParams {
 
 export const Room = (): JSX.Element => {
   const [newQuestion, setNewQuestion] = useState("");
+  const [questions, setQuestions] = useState<QuestionModel[]>([]);
+  const [title, setTitle] = useState("");
   const { id } = useParams<RoomCodeParams>();
   const { user } = useAuth();
+
+  useEffect(() => {
+    const loadQuestions = async () => {
+      const room = await RoomService.getById(id);
+
+      if (room && room.questions) {
+        setTitle(room.title);
+        setQuestions(room.questions);
+      }
+    };
+
+    loadQuestions();
+  }, [id]);
 
   const handleCreateNewQuestioin = async (
     e: React.FormEvent<HTMLFormElement>
@@ -48,6 +64,7 @@ export const Room = (): JSX.Element => {
 
     setNewQuestion("");
   };
+
   return (
     <S.Container>
       <S.Header>
@@ -59,8 +76,13 @@ export const Room = (): JSX.Element => {
 
       <S.Main>
         <S.TitleWrapper>
-          <S.Title>Sala React</S.Title>
-          <S.QuestionCount>4 perguntas</S.QuestionCount>
+          <S.Title>Sala {title}</S.Title>
+          {questions.length > 0 && (
+            <S.QuestionCount>
+              {questions.length}{" "}
+              {questions.length > 1 ? "perguntas" : "pergunta"}
+            </S.QuestionCount>
+          )}
         </S.TitleWrapper>
         <S.Form onSubmit={handleCreateNewQuestioin}>
           <S.QuestionInput
@@ -86,31 +108,18 @@ export const Room = (): JSX.Element => {
           </S.FormFooter>
         </S.Form>
         <S.QuestionList>
-          <Question
-            content={
-              "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis accusantium asperiores, minus natus minima ipsam?"
-            }
-            author={{
-              name: "Patrick Mazzuco",
-              avatar: "https://avatars.githubusercontent.com/u/32601286?v=4",
-            }}
-          />
-          <Question
-            content={
-              "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus consequatur, animi nobis optio ab dolore, consequuntur aspernatur aperiam fuga fugit voluptatibus iusto autem accusantium suscipit reprehenderit tenetur quaerat. Adipisci itaque harum similique recusandae aliquid."
-            }
-            author={{
-              name: "Patrick Mazzuco",
-              avatar: "https://avatars.githubusercontent.com/u/32601286?v=4",
-            }}
-          />
-          <Question
-            content={"Lorem ipsum dolor sit amet."}
-            author={{
-              name: "Patrick Mazzuco",
-              avatar: "https://avatars.githubusercontent.com/u/32601286?v=4",
-            }}
-          />
+          {questions.map((question) => {
+            return (
+              <Question
+                key={question.id}
+                content={question.content}
+                author={{
+                  name: question.author.name,
+                  avatar: question.author.photoURL,
+                }}
+              />
+            );
+          })}
         </S.QuestionList>
       </S.Main>
     </S.Container>

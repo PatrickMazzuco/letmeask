@@ -2,6 +2,8 @@ import { Room } from "../../models/Room";
 import { Question } from "../../models/Question";
 import { database } from "../firebase";
 
+type FirebaseQuestion = Record<string, Question>;
+
 const RoomService = {
   create: async (
     roomName: string,
@@ -26,9 +28,15 @@ const RoomService = {
     if (!room.exists()) return null;
 
     const roomData = room.val();
+    const firebaseQuestions: FirebaseQuestion = roomData.questions;
 
-    const parsedQuestions: Question[] = roomData.questions
-      ? Object.values(roomData.questions)
+    const parsedQuestions: Question[] = firebaseQuestions
+      ? Object.entries(firebaseQuestions).map(([id, question]) => {
+          return {
+            id,
+            ...question,
+          };
+        })
       : [];
 
     return {
