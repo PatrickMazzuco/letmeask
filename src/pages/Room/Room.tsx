@@ -12,13 +12,13 @@ import QuestionService from "../../services/data/question";
 
 import * as S from "./styles";
 
-interface RoomCodeParams {
+interface RoomParams {
   id: string;
 }
 
 export const Room = (): JSX.Element => {
   const [newQuestion, setNewQuestion] = useState("");
-  const { id } = useParams<RoomCodeParams>();
+  const { id } = useParams<RoomParams>();
   const { title, questions } = useRoom(id);
   const { user } = useAuth();
 
