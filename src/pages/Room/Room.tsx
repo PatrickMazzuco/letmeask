@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import logoImg from "../../assets/images/logo.svg";
@@ -6,9 +6,9 @@ import { Button } from "../../components/Button";
 import { Question } from "../../components/Question";
 import { RoomCode } from "../../components/RoomCode";
 import { useAuth } from "../../hooks/useAuth";
+import { useRoom } from "../../hooks/useRoom";
 import { Question as QuestionModel } from "../../models/Question";
 import QuestionService from "../../services/data/question";
-import RoomService from "../../services/data/room";
 
 import * as S from "./styles";
 
@@ -18,23 +18,9 @@ interface RoomCodeParams {
 
 export const Room = (): JSX.Element => {
   const [newQuestion, setNewQuestion] = useState("");
-  const [questions, setQuestions] = useState<QuestionModel[]>([]);
-  const [title, setTitle] = useState("");
   const { id } = useParams<RoomCodeParams>();
+  const { title, questions } = useRoom(id);
   const { user } = useAuth();
-
-  useEffect(() => {
-    const loadQuestions = async () => {
-      const room = await RoomService.getById(id);
-
-      if (room && room.questions) {
-        setTitle(room.title);
-        setQuestions(room.questions);
-      }
-    };
-
-    loadQuestions();
-  }, [id]);
 
   const handleCreateNewQuestioin = async (
     e: React.FormEvent<HTMLFormElement>
