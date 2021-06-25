@@ -21,6 +21,22 @@ const QuestionService = {
     await questionLikesRef.remove();
   },
 
+  markAsAnswered: async (roomId: string, questionId: string): Promise<any> => {
+    const questionLikesRef = database().ref(
+      `rooms/${roomId}/questions/${questionId}`
+    );
+
+    await questionLikesRef.update({ isAnswered: true });
+  },
+
+  highlight: async (roomId: string, questionId: string): Promise<any> => {
+    const questionLikesRef = database().ref(
+      `rooms/${roomId}/questions/${questionId}`
+    );
+
+    await questionLikesRef.update({ isHighlighted: true });
+  },
+
   like: async (
     authorId: string,
     roomId: string,

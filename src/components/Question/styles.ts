@@ -1,11 +1,31 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const Container = styled.div`
+interface QuestionProps {
+  highlighted?: boolean;
+  answered?: boolean;
+}
+
+export const Container = styled.div<QuestionProps>`
   padding: 1.5rem;
 
   border-radius: 0.5rem;
   box-shadow: 0 0.125rem 0.75rem rgba(0, 0, 0, 0.04);
   background: ${({ theme }) => theme.palette.backgroundLight};
+
+  ${({ highlighted, answered }) =>
+    highlighted && !answered
+      ? css`
+          background: ${({ theme }) => theme.palette.backgroundHighlighted};
+          border: 1px solid ${({ theme }) => theme.palette.main};
+        `
+      : {}}
+
+  ${({ answered }) =>
+    answered
+      ? css`
+          background: ${({ theme }) => theme.palette.borderLight};
+        `
+      : {}}
 
   & + & {
     margin-top: 0.5rem;
@@ -36,7 +56,7 @@ export const Footer = styled.footer`
   }
 `;
 
-export const UserInfo = styled.div`
+export const UserInfo = styled.div<QuestionProps>`
   display: flex;
   align-items: center;
 `;
@@ -48,9 +68,16 @@ export const Avatar = styled.img`
   border-radius: 50%;
 `;
 
-export const UserName = styled.span`
+export const UserName = styled.span<QuestionProps>`
   margin-left: 0.5rem;
 
   font-size: 0.875rem;
   color: ${({ theme }) => theme.palette.textMainLight};
+
+  ${({ highlighted, answered }) =>
+    highlighted && !answered
+      ? css`
+          color: ${({ theme }) => theme.palette.textMain};
+        `
+      : {}}
 `;

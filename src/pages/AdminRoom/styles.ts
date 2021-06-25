@@ -67,6 +67,11 @@ export const QuestionList = styled.div`
   margin-top: 2rem;
 `;
 
-export const DeleteButton = styled.button``;
+export const ButtonGroup = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+export const IconButton = styled.button``;
 
 export const ButtonIcon = styled.img``;

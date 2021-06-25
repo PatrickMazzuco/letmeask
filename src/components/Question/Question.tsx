@@ -9,17 +9,19 @@ interface QuestionProps {
     avatar: string;
   };
   children?: React.ReactNode;
+  isHighlighted?: boolean;
+  isAnswered?: boolean;
 }
 
 export const Question = (props: QuestionProps): JSX.Element => {
-  const { content, author } = props;
+  const { content, author, isHighlighted, isAnswered } = props;
   return (
-    <S.Container>
+    <S.Container highlighted={isHighlighted} answered={isAnswered}>
       <S.Content>{content}</S.Content>
       <S.Footer>
         <S.UserInfo>
           <S.Avatar src={author.avatar} alt={author.name} />
-          <S.UserName>{author.name}</S.UserName>
+          <S.UserName highlighted={isHighlighted}>{author.name}</S.UserName>
         </S.UserInfo>
         <div>{props.children}</div>
       </S.Footer>
