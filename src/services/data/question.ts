@@ -1,4 +1,4 @@
-import { Question } from "../../models/Question";
+import { Like, Question } from "../../models/Question";
 import { database } from "../firebase";
 
 const QuestionService = {
@@ -11,6 +11,32 @@ const QuestionService = {
     const createdQuestion = await questionsRef.push(question);
 
     return createdQuestion.key;
+  },
+
+  like: async (
+    authorId: string,
+    roomId: string,
+    questionId: string
+  ): Promise<string | null> => {
+    const questionLikesRef = database().ref(
+      `rooms/${roomId}/questions/${questionId}/likes`
+    );
+
+    const newLike = await questionLikesRef.push({ authorId } as Like);
+
+    return newLike.key;
+  },
+
+  undoLike: async (
+    roomId: string,
+    questionId: string,
+    likeId: string
+  ): Promise<any> => {
+    const questionLikesRef = database().ref(
+      `rooms/${roomId}/questions/${questionId}/likes/${likeId}`
+    );
+
+    await questionLikesRef.remove();
   },
 };
 

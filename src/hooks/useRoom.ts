@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
 import { Question } from "../models/Question";
 import RoomService from "../services/data/room";
+import { useAuth } from "./useAuth";
 
 export const useRoom = (roomId: string) => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [title, setTitle] = useState("");
+  const { user } = useAuth();
 
   useEffect(() => {
-    const loadQuestions = async () => {
-      const room = await RoomService.getById(roomId);
-
+    const unsubscribe = RoomService.onRoomChange(roomId, user?.id, (room) => {
       if (room && room.questions) {
         setTitle(room.title);
         setQuestions(room.questions);
       }
-    };
+    });
 
-    loadQuestions();
-  }, [roomId]);
+    return () => {
+      unsubscribe();
+    };
+  }, [roomId, user?.id]);
 
   return {
     title,

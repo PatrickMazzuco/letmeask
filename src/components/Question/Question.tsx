@@ -8,6 +8,7 @@ interface QuestionProps {
     name: string;
     avatar: string;
   };
+  children?: React.ReactNode;
 }
 
 export const Question = (props: QuestionProps): JSX.Element => {
@@ -20,7 +21,7 @@ export const Question = (props: QuestionProps): JSX.Element => {
           <S.Avatar src={author.avatar} alt={author.name} />
           <S.UserName>{author.name}</S.UserName>
         </S.UserInfo>
-        <div></div>
+        <div>{props.children}</div>
       </S.Footer>
     </S.Container>
   );

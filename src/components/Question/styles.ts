@@ -22,6 +22,18 @@ export const Footer = styled.footer`
   align-items: center;
 
   margin-top: 1.5rem;
+
+  button {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
 `;
 
 export const UserInfo = styled.div`

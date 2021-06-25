@@ -119,3 +119,24 @@ export const UserName = styled.span`
 export const QuestionList = styled.div`
   margin-top: 2rem;
 `;
+
+interface LikeButtonProps {
+  liked?: boolean;
+}
+
+export const LikeButton = styled.button<LikeButtonProps>`
+  display: flex;
+  align-items: flex-end;
+
+  gap: 0.5rem;
+
+  color: ${({ theme, liked }) =>
+    liked ? theme.palette.main : theme.palette.textMainLight};
+
+  svg path {
+    stroke: ${({ theme, liked }) =>
+      liked ? theme.palette.main : theme.palette.textMainLight};
+  }
+`;
+
+export const Likes = styled.span``;
