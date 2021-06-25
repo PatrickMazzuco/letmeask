@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import logoImg from "../../assets/images/logo.svg";
 import deleteImage from "../../assets/images/delete.svg";
@@ -6,19 +6,19 @@ import deleteImage from "../../assets/images/delete.svg";
 import { Button } from "../../components/Button";
 import { Question } from "../../components/Question";
 import { RoomCode } from "../../components/RoomCode";
-import { useAuth } from "../../hooks/useAuth";
 import { useRoom } from "../../hooks/useRoom";
 import QuestionService from "../../services/data/question";
 
 import * as S from "./styles";
+import RoomService from "../../services/data/room";
 
 interface RoomParams {
   id: string;
 }
 export const AdminRoom = (): JSX.Element => {
+  const history = useHistory();
   const { id: roomId } = useParams<RoomParams>();
   const { title, questions } = useRoom(roomId);
-  const { user } = useAuth();
 
   const handleDeleteQuestion = async (questionId: string) => {
     const deleteConfirmed = window.confirm(
@@ -28,6 +28,11 @@ export const AdminRoom = (): JSX.Element => {
     if (deleteConfirmed) await QuestionService.delete(roomId, questionId);
   };
 
+  const handleCloseRoom = async () => {
+    await RoomService.close(roomId);
+    history.push("/");
+  };
+
   return (
     <S.Container>
       <S.Header>
@@ -35,7 +40,9 @@ export const AdminRoom = (): JSX.Element => {
           <S.Logo src={logoImg} alt="Letmeask" />
           <S.ButtonsWrapper>
             <RoomCode code={roomId} />
-            <Button variant="outlined">Encerrar sala</Button>
+            <Button variant="outlined" onClick={handleCloseRoom}>
+              Encerrar sala
+            </Button>
           </S.ButtonsWrapper>
         </S.LogoWrapper>
       </S.Header>

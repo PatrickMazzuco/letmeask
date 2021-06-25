@@ -5,4 +5,5 @@ export interface Room {
   title: string;
   authorId: string;
   questions?: Question[];
+  closedAt?: Date;
 }

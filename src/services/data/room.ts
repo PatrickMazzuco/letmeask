@@ -26,6 +26,7 @@ type FirebaseQuestions = Record<
 type FirebaseRoom = {
   title: string;
   authorId: string;
+  closedAt?: Date;
   questions: FirebaseQuestions;
 };
 
@@ -43,6 +44,12 @@ const RoomService = {
     const firebaseRoom = await roomRef.push(newRoom);
 
     return firebaseRoom.key;
+  },
+
+  close: async (roomId: string) => {
+    const roomRef = database().ref(`rooms/${roomId}`);
+
+    await roomRef.update({ closedAt: new Date() });
   },
 
   getById: async (roomId: string, userId?: string): Promise<Room | null> => {
@@ -104,6 +111,7 @@ const parseRoom = (room: FirebaseRoom, userId?: string) => {
   return {
     title: room.title,
     authorId: room.authorId,
+    closedAt: room.closedAt,
     questions: parsedQuestions,
   } as Room;
 };

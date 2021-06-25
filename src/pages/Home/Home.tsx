@@ -30,12 +30,10 @@ export const Home = () => {
 
     const roomData = await RoomService.getById(roomCode);
 
-    if (roomData) {
-      history.push(`/rooms/${roomCode}`);
-      return;
-    }
+    if (!roomData) return alert("Sala não encontrada");
+    if (roomData.closedAt) return alert("Essa sala já foi encerrada");
 
-    alert("Sala não encontrada");
+    history.push(`/rooms/${roomCode}`);
   };
 
   return (
