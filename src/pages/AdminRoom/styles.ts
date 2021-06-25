@@ -66,3 +66,7 @@ export const QuestionCount = styled.span`
 export const QuestionList = styled.div`
   margin-top: 2rem;
 `;
+
+export const DeleteButton = styled.button``;
+
+export const ButtonIcon = styled.img``;

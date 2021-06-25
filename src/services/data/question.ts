@@ -13,6 +13,14 @@ const QuestionService = {
     return createdQuestion.key;
   },
 
+  delete: async (roomId: string, questionId: string): Promise<any> => {
+    const questionLikesRef = database().ref(
+      `rooms/${roomId}/questions/${questionId}`
+    );
+
+    await questionLikesRef.remove();
+  },
+
   like: async (
     authorId: string,
     roomId: string,

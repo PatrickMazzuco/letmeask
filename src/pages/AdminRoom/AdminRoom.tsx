@@ -1,11 +1,14 @@
 import { useParams } from "react-router-dom";
 
 import logoImg from "../../assets/images/logo.svg";
+import deleteImage from "../../assets/images/delete.svg";
+
 import { Button } from "../../components/Button";
 import { Question } from "../../components/Question";
 import { RoomCode } from "../../components/RoomCode";
 import { useAuth } from "../../hooks/useAuth";
 import { useRoom } from "../../hooks/useRoom";
+import QuestionService from "../../services/data/question";
 
 import * as S from "./styles";
 
@@ -13,9 +16,17 @@ interface RoomParams {
   id: string;
 }
 export const AdminRoom = (): JSX.Element => {
-  const { id } = useParams<RoomParams>();
-  const { title, questions } = useRoom(id);
+  const { id: roomId } = useParams<RoomParams>();
+  const { title, questions } = useRoom(roomId);
   const { user } = useAuth();
+
+  const handleDeleteQuestion = async (questionId: string) => {
+    const deleteConfirmed = window.confirm(
+      "Tem certeza que você deseja excluir esta pergunta?"
+    );
+
+    if (deleteConfirmed) await QuestionService.delete(roomId, questionId);
+  };
 
   return (
     <S.Container>
@@ -23,7 +34,7 @@ export const AdminRoom = (): JSX.Element => {
         <S.LogoWrapper>
           <S.Logo src={logoImg} alt="Letmeask" />
           <S.ButtonsWrapper>
-            <RoomCode code={id} />
+            <RoomCode code={roomId} />
             <Button variant="outlined">Encerrar sala</Button>
           </S.ButtonsWrapper>
         </S.LogoWrapper>
@@ -49,7 +60,14 @@ export const AdminRoom = (): JSX.Element => {
                   name: question.author.name,
                   avatar: question.author.photoURL,
                 }}
-              />
+              >
+                <S.DeleteButton
+                  type="button"
+                  onClick={() => handleDeleteQuestion(question.id!)}
+                >
+                  <S.ButtonIcon src={deleteImage} alt="Remover pergunta" />
+                </S.DeleteButton>
+              </Question>
             );
           })}
         </S.QuestionList>
