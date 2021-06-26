@@ -1,4 +1,4 @@
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 
 import logoImg from "../../assets/images/logo.svg";
 import deleteImg from "../../assets/images/delete.svg";
@@ -47,7 +47,9 @@ export const AdminRoom = (): JSX.Element => {
     <S.Container>
       <S.Header>
         <S.LogoWrapper>
-          <S.Logo src={logoImg} alt="Letmeask" />
+          <Link to="/">
+            <S.Logo src={logoImg} alt="Letmeask" />
+          </Link>
           <S.ButtonsWrapper>
             <RoomCode code={roomId} />
             <Button variant="outlined" onClick={handleCloseRoom}>
@@ -59,7 +61,7 @@ export const AdminRoom = (): JSX.Element => {
 
       <S.Main>
         <S.TitleWrapper>
-          <S.Title>Sala {title}</S.Title>
+          <S.Title>Sala "{title}"</S.Title>
           {questions.length > 0 && (
             <S.QuestionCount>
               {questions.length}{" "}

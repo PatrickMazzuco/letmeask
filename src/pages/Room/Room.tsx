@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import logoImg from "../../assets/images/logo.svg";
 import { Button } from "../../components/Button";
@@ -73,7 +73,9 @@ export const Room = (): JSX.Element => {
     <S.Container>
       <S.Header>
         <S.LogoWrapper>
-          <S.Logo src={logoImg} alt="Letmeask" />
+          <Link to="/">
+            <S.Logo src={logoImg} alt="Letmeask" />
+          </Link>
           <RoomCode code={roomId} />
         </S.LogoWrapper>
       </S.Header>
