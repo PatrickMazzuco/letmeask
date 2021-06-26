@@ -4,6 +4,7 @@ import logoImg from "../../assets/images/logo.svg";
 import deleteImg from "../../assets/images/delete.svg";
 import checkImg from "../../assets/images/check.svg";
 import answerImg from "../../assets/images/answer.svg";
+import emptyQuestionsImg from "../../assets/images/empty-questions.svg";
 
 import { Button } from "../../components/Button";
 import { Question } from "../../components/Question";
@@ -17,6 +18,7 @@ import RoomService from "../../services/data/room";
 interface RoomParams {
   id: string;
 }
+
 export const AdminRoom = (): JSX.Element => {
   const history = useHistory();
   const { id: roomId } = useParams<RoomParams>();
@@ -69,52 +71,71 @@ export const AdminRoom = (): JSX.Element => {
             </S.QuestionCount>
           )}
         </S.TitleWrapper>
-        <S.QuestionList>
-          {questions.map((question) => {
-            return (
-              <Question
-                key={question.id}
-                content={question.content}
-                isHighlighted={question.isHighlighted}
-                isAnswered={question.isAnswered}
-                author={{
-                  name: question.author.name,
-                  avatar: question.author.photoURL,
-                }}
-              >
-                <S.ButtonGroup>
-                  {!question.isAnswered && (
-                    <>
-                      <S.IconButton
-                        type="button"
-                        onClick={() =>
-                          handleMarkQuestionAsAnswered(question.id!)
-                        }
-                      >
-                        <S.ButtonIcon src={checkImg} alt="Destacar pergunta" />
-                      </S.IconButton>
-                      <S.IconButton
-                        type="button"
-                        onClick={() => handlehighlightQuestion(question.id!)}
-                      >
-                        <S.ButtonIcon
-                          src={answerImg}
-                          alt="Marcar pergunta como respondida"
-                        />
-                      </S.IconButton>
-                    </>
-                  )}
-                  <S.IconButton
-                    type="button"
-                    onClick={() => handleDeleteQuestion(question.id!)}
-                  >
-                    <S.ButtonIcon src={deleteImg} alt="Remover pergunta" />
-                  </S.IconButton>
-                </S.ButtonGroup>
-              </Question>
-            );
-          })}
-        </S.QuestionList>
+        {questions.length > 0 ? (
+          <S.QuestionList>
+            {questions.map((question) => {
+              return (
+                <Question
+                  key={question.id}
+                  content={question.content}
+                  isHighlighted={question.isHighlighted}
+                  isAnswered={question.isAnswered}
+                  author={{
+                    name: question.author.name,
+                    avatar: question.author.photoURL,
+                  }}
+                >
+                  <S.ButtonGroup>
+                    {!question.isAnswered && (
+                      <>
+                        <S.IconButton
+                          type="button"
+                          onClick={() =>
+                            handleMarkQuestionAsAnswered(question.id!)
+                          }
+                        >
+                          <S.ButtonIcon
+                            src={checkImg}
+                            alt="Destacar pergunta"
+                          />
+                        </S.IconButton>
+                        <S.IconButton
+                          type="button"
+                          onClick={() => handlehighlightQuestion(question.id!)}
+                        >
+                          <S.ButtonIcon
+                            src={answerImg}
+                            alt="Marcar pergunta como respondida"
+                          />
+                        </S.IconButton>
+                      </>
+                    )}
+                    <S.IconButton
+                      type="button"
+                      onClick={() => handleDeleteQuestion(question.id!)}
+                    >
+                      <S.ButtonIcon src={deleteImg} alt="Remover pergunta" />
+                    </S.IconButton>
+                  </S.ButtonGroup>
+                </Question>
+              );
+            })}
+          </S.QuestionList>
+        ) : (
+          <S.EmptyQuesitonsWrapper>
+            <S.EmptyQuestions>
+              <S.EmptyIllustration
+                src={emptyQuestionsImg}
+                alt="Nenhuma pergunta"
+              />
+              <S.MessageTitle>Nenhuma pergunta por aqui...</S.MessageTitle>
+              <S.Message>
+                Envie o código desta sala para seus amigos e comece a responder
+                perguntas!
+              </S.Message>
+            </S.EmptyQuestions>
+          </S.EmptyQuesitonsWrapper>
+        )}
       </S.Main>
     </S.Container>
   );

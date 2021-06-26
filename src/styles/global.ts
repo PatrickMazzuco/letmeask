@@ -8,6 +8,10 @@ export const GlobalStyles = createGlobalStyle`
   box-sizing: border-box;
   }
 
+  body, html, #root, #root > div {
+    height: 100%;
+  }
+
   body {
     color: ${(props) => props.theme.palette.textMain};
     background: ${(props) => props.theme.palette.background};

@@ -1,8 +1,13 @@
 import styled from "styled-components";
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export const Header = styled.header`
+  width: 100%;
   padding: 1.5rem;
   border-bottom: 1px solid ${({ theme }) => theme.palette.borderLight};
 `;
@@ -22,7 +27,12 @@ export const Logo = styled.img`
 `;
 
 export const Main = styled.main`
+  width: 100%;
   max-width: 50rem;
+
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 
   margin: 0 auto;
 `;
@@ -31,7 +41,7 @@ export const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  margin: 2rem 0 1.5rem;
+  margin: 4rem 0 1.5rem;
 `;
 
 export const Title = styled.h1`
@@ -140,3 +150,42 @@ export const LikeButton = styled.button<LikeButtonProps>`
 `;
 
 export const Likes = styled.span``;
+
+export const EmptyQuesitonsWrapper = styled.div`
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 1;
+`;
+
+export const EmptyQuestions = styled.div`
+  max-width: 17.5rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+`;
+
+export const EmptyIllustration = styled.img`
+  max-width: 9.375rem;
+`;
+
+export const MessageTitle = styled.h3`
+  margin-top: 1rem;
+
+  font-size: 1.125rem;
+  font-family: "Poppins", sans-serif;
+  color: ${({ theme }) => theme.palette.textMain};
+`;
+
+export const Message = styled.p`
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: ${({ theme }) => theme.palette.textMainLight};
+`;
