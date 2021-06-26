@@ -20,7 +20,7 @@ export const NewRoom = () => {
 
     const roomId = await RoomService.create(roomName, user!.id);
 
-    history.push(`/rooms/${roomId}`);
+    history.push(`/admin/rooms/${roomId}`);
   };
 
   return (
