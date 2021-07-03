@@ -7,11 +7,12 @@ import { Router } from "./router";
 import { AuthContextProvider } from "./contexts/AuthContext";
 
 import { GlobalStyles } from "./styles/global";
-import { defaultTheme } from "./styles/theme";
+import { useTheme } from "./hooks/useTheme";
 
 function App() {
+  const { selectedTheme } = useTheme();
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={selectedTheme}>
       <GlobalStyles />
       <AuthContextProvider>
         <Router />

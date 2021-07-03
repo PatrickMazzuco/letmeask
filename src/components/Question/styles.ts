@@ -23,7 +23,7 @@ export const Container = styled.div<QuestionProps>`
   ${({ answered }) =>
     answered
       ? css`
-          background: ${({ theme }) => theme.palette.borderLight};
+          background: ${({ theme }) => theme.palette.disabled};
         `
       : {}}
 

@@ -12,7 +12,7 @@ export const Header = styled.header`
   border-bottom: 1px solid ${({ theme }) => theme.palette.borderLight};
 `;
 
-export const LogoWrapper = styled.div`
+export const HeaderContent = styled.div`
   max-width: 70rem;
 
   display: flex;
@@ -20,6 +20,13 @@ export const LogoWrapper = styled.div`
   align-items: center;
 
   margin: 0 auto;
+`;
+
+export const LogoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  gap: 1rem;
 `;
 
 export const Logo = styled.img`

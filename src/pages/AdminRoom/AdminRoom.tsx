@@ -1,6 +1,7 @@
 import { Link, useHistory, useParams } from "react-router-dom";
 
 import logoImg from "../../assets/images/logo.svg";
+import logoImgLight from "../../assets/images/logo-light.svg";
 import deleteImg from "../../assets/images/delete.svg";
 import checkImg from "../../assets/images/check.svg";
 import answerImg from "../../assets/images/answer.svg";
@@ -9,11 +10,13 @@ import emptyQuestionsImg from "../../assets/images/empty-questions.svg";
 import { Button } from "../../components/Button";
 import { Question } from "../../components/Question";
 import { RoomCode } from "../../components/RoomCode";
+import { ThemeSwitch } from "../../components/ThemeSwitch";
 import { useRoom } from "../../hooks/useRoom";
+import { useTheme } from "../../hooks/useTheme";
 import QuestionService from "../../services/data/question";
+import RoomService from "../../services/data/room";
 
 import * as S from "./styles";
-import RoomService from "../../services/data/room";
 
 interface RoomParams {
   id: string;
@@ -23,6 +26,7 @@ export const AdminRoom = (): JSX.Element => {
   const history = useHistory();
   const { id: roomId } = useParams<RoomParams>();
   const { title, questions } = useRoom(roomId);
+  const { isDarkMode, toggleDarkMode } = useTheme();
 
   const handleMarkQuestionAsAnswered = async (questionId: string) => {
     await QuestionService.markAsAnswered(roomId, questionId);
@@ -48,17 +52,23 @@ export const AdminRoom = (): JSX.Element => {
   return (
     <S.Container>
       <S.Header>
-        <S.LogoWrapper>
-          <Link to="/">
-            <S.Logo src={logoImg} alt="Letmeask" />
-          </Link>
+        <S.HeaderContent>
+          <S.LogoWrapper>
+            <Link to="/">
+              <S.Logo
+                src={isDarkMode ? logoImgLight : logoImg}
+                alt="Letmeask"
+              />
+            </Link>
+            <ThemeSwitch isDarkMode={isDarkMode} onChange={toggleDarkMode} />
+          </S.LogoWrapper>
           <S.ButtonsWrapper>
             <RoomCode code={roomId} />
             <Button variant="outlined" onClick={handleCloseRoom}>
               Encerrar sala
             </Button>
           </S.ButtonsWrapper>
-        </S.LogoWrapper>
+        </S.HeaderContent>
       </S.Header>
 
       <S.Main>

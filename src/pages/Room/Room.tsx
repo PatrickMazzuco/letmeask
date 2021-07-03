@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import logoImg from "../../assets/images/logo.svg";
+import logoImgLight from "../../assets/images/logo-light.svg";
 import emptyQuestionsImg from "../../assets/images/empty-questions.svg";
 
 import { Button } from "../../components/Button";
 import { Question } from "../../components/Question";
 import { RoomCode } from "../../components/RoomCode";
+import { ThemeSwitch } from "../../components/ThemeSwitch";
 import { useAuth } from "../../hooks/useAuth";
 import { useRoom } from "../../hooks/useRoom";
+import { useTheme } from "../../hooks/useTheme";
 import { Question as QuestionModel } from "../../models/Question";
 import QuestionService from "../../services/data/question";
 
@@ -22,6 +25,7 @@ export const Room = (): JSX.Element => {
   const [newQuestion, setNewQuestion] = useState("");
   const { id: roomId } = useParams<RoomParams>();
   const { title, questions } = useRoom(roomId);
+  const { isDarkMode, toggleDarkMode } = useTheme();
   const { user } = useAuth();
 
   const handleCreateNewQuestioin = async (
@@ -74,12 +78,18 @@ export const Room = (): JSX.Element => {
   return (
     <S.Container>
       <S.Header>
-        <S.LogoWrapper>
-          <Link to="/">
-            <S.Logo src={logoImg} alt="Letmeask" />
-          </Link>
+        <S.HeaderContent>
+          <S.LogoWrapper>
+            <Link to="/">
+              <S.Logo
+                src={isDarkMode ? logoImgLight : logoImg}
+                alt="Letmeask"
+              />
+            </Link>
+            <ThemeSwitch isDarkMode={isDarkMode} onChange={toggleDarkMode} />
+          </S.LogoWrapper>
           <RoomCode code={roomId} />
-        </S.LogoWrapper>
+        </S.HeaderContent>
       </S.Header>
 
       <S.Main>
