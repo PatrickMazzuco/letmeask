@@ -5,30 +5,52 @@ import { Button } from "../../components/Button/Button";
 export const Container = styled.div`
   height: 100vh;
 
-  display: flex;
-  align-items: stretch;
+  display: grid;
+  grid-template-areas: "aside main";
+  grid-template-columns: 8fr 7fr;
+
+  @media (max-width: 1024px) {
+    grid-template-areas:
+      "main"
+      "aside";
+    grid-template-columns: 100%;
+  }
 `;
 
 export const Aside = styled.aside`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex: 7;
+
+  grid-area: aside;
 
   padding: 7.5rem 5rem;
 
   background: ${({ theme }) => theme.palette.main};
   color: ${({ theme }) => theme.palette.textLight};
+
+  @media (max-width: 1024px) {
+    align-items: center;
+    padding: 2.5em 1rem;
+  }
 `;
 
 export const Illustration = styled.img`
   max-width: 20rem;
+
+  @media (max-width: 1024px) {
+    max-width: 10rem;
+  }
 `;
 
 export const Title = styled.strong`
   font: 700 2.25rem "Poppins", sans-serif;
   line-height: 2.625rem;
   margin-top: 1rem;
+
+  @media (max-width: 1024px) {
+    font-size: 1.75rem;
+  }
 `;
 
 export const Description = styled.p`
@@ -36,15 +58,25 @@ export const Description = styled.p`
   line-height: 2rem;
   margin-top: 1rem;
   color: ${({ theme }) => theme.palette.textLighter};
+
+  @media (max-width: 1024px) {
+    margin-top: 0;
+    font-size: 1.25rem;
+  }
 `;
 
 export const Main = styled.main`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 8;
+
+  grid-area: main;
 
   padding: 0 2rem;
+
+  @media (max-width: 1024px) {
+    padding: 2rem 1rem;
+  }
 `;
 
 export const Content = styled.div`
@@ -88,6 +120,10 @@ export const CreateRoomButton = styled.button`
 
   &:hover {
     filter: brightness(0.9);
+  }
+
+  @media (max-width: 1024px) {
+    margin-top: 2rem;
   }
 `;
 
