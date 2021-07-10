@@ -20,6 +20,11 @@ export const HeaderContent = styled.div`
   align-items: center;
 
   margin: 0 auto;
+
+  @media (max-width: 690px) {
+    flex-direction: column;
+    justify-content: baseline;
+  }
 `;
 
 export const LogoWrapper = styled.div`
@@ -27,6 +32,16 @@ export const LogoWrapper = styled.div`
   align-items: center;
 
   gap: 1rem;
+
+  @media (max-width: 690px) {
+    flex-direction: column;
+    justify-content: baseline;
+    gap: 0;
+
+    * + * {
+      margin-top: 0.5rem;
+    }
+  }
 `;
 
 export const Logo = styled.img`
@@ -42,6 +57,18 @@ export const ButtonsWrapper = styled.div`
   button {
     height: 2.5rem;
   }
+
+  @media (max-width: 690px) {
+    width: 100%;
+    flex-direction: column;
+    justify-content: baseline;
+
+    margin-top: 1rem;
+
+    button {
+      width: 100%;
+    }
+  }
 `;
 
 export const Main = styled.main`
@@ -51,6 +78,8 @@ export const Main = styled.main`
   display: flex;
   flex-direction: column;
   flex: 1;
+
+  padding: 0 1rem;
 `;
 
 export const TitleWrapper = styled.div`

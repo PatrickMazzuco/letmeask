@@ -20,6 +20,16 @@ export const HeaderContent = styled.div`
   align-items: center;
 
   margin: 0 auto;
+
+  @media (max-width: 690px) {
+    flex-direction: column;
+    justify-content: baseline;
+
+    button {
+      width: 100%;
+      margin-top: 1rem;
+    }
+  }
 `;
 
 export const LogoWrapper = styled.div`
@@ -27,6 +37,16 @@ export const LogoWrapper = styled.div`
   align-items: center;
 
   gap: 1rem;
+
+  @media (max-width: 690px) {
+    flex-direction: column;
+    justify-content: baseline;
+    gap: 0;
+
+    * + * {
+      margin-top: 0.5rem;
+    }
+  }
 `;
 
 export const Logo = styled.img`
@@ -41,6 +61,7 @@ export const Main = styled.main`
   flex-direction: column;
   flex: 1;
 
+  padding: 0 1rem;
   margin: 0 auto;
 `;
 

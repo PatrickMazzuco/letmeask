@@ -28,7 +28,7 @@ export const IconWrapper = styled.div`
 export const CopyIcon = styled.img``;
 
 export const Code = styled.span`
-  width: 14.375rem;
+  width: 14.5rem;
 
   display: block;
   flex: 1;
